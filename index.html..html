@@ -1,0 +1,90 @@
+<!DOCTYPE html>
+<html lang="hy">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>ARMENIAN NUMBERS</title>
+<script src="https://telegram.org/js/telegram-web-app.js"></script>
+<style>
+:root{--bg:#10141d;--panel:#1b2330;--gold:#ffd166;--muted:#aab4c4;--green:#42d392}
+*{box-sizing:border-box}
+body{margin:0;background:linear-gradient(160deg,#151e2b,#0c1017);color:#fff;font-family:Arial,sans-serif;padding:18px;min-height:100vh}
+.wrap{max-width:520px;margin:auto}
+header{text-align:center;padding:14px 0 20px}
+h1{font-size:27px;margin:4px 0;color:var(--gold);letter-spacing:1px}
+.sub{color:var(--muted);font-size:13px}
+.balance{background:linear-gradient(120deg,#29374b,#202a38);border:1px solid #3a4a60;border-radius:18px;padding:16px;text-align:center;margin-bottom:16px}
+.balance small{color:var(--muted)}
+.money{font-size:30px;color:var(--gold);font-weight:800;margin-top:5px}
+.plate{background:#f8f8f5;color:#151515;border-radius:12px;border:3px solid #d7d7d2;display:flex;align-items:center;justify-content:center;gap:8px;padding:10px 8px;margin:15px auto;max-width:290px;box-shadow:0 7px 0 #9ea3a9;font-size:26px;font-weight:900;letter-spacing:2px}
+.flag{background:#234c9b;color:white;font-size:10px;padding:8px 5px;border-radius:4px;letter-spacing:0}
+.card{background:var(--panel);border:1px solid #2d394b;border-radius:18px;padding:16px;margin:14px 0}
+button{border:0;border-radius:13px;padding:14px 16px;font-weight:800;font-size:15px;cursor:pointer}
+.primary{background:var(--gold);color:#171717;width:100%}
+.secondary{background:#2a3545;color:#fff;width:100%}
+.grid{display:grid;grid-template-columns:1fr 1fr;gap:10px}
+.stats{display:flex;justify-content:space-between;color:var(--muted);font-size:13px;margin-top:10px}
+h2{font-size:17px;margin:0 0 10px}
+.item{background:#121a25;border-radius:12px;padding:12px;margin-top:8px;display:flex;justify-content:space-between;align-items:center;gap:8px}
+.item button{padding:9px 11px;font-size:12px;background:var(--green);color:#102019}
+.note{font-size:12px;color:var(--muted);line-height:1.5;text-align:center;margin:18px 5px}
+#message{min-height:22px;text-align:center;color:var(--green);font-size:13px;margin:8px}
+</style>
+</head>
+<body>
+<div class="wrap">
+<header>
+  <div style="font-size:34px">🇦🇲</div>
+  <h1>ARMENIAN NUMBERS</h1>
+  <div class="sub">Վիրտուալ համարանիշների խաղ</div>
+</header>
+<div class="balance">
+  <small>ՔՈ ՄԵՏԱՂԱԴՐԱՄԸ</small>
+  <div class="money"><span id="coins">10000</span> 🪙</div>
+</div>
+<div class="card" style="text-align:center">
+  <h2>🎰 Պտտիր և ստացիր համար</h2>
+  <div class="plate"><span class="flag">AM<br>🇦🇲</span><span id="plate">00 AA 000</span></div>
+  <button class="primary" id="spin">ՊՏՏԵԼ — 500 🪙</button>
+  <div class="stats"><span>Հնարավոր պարգև՝ պատահական</span><span>Գին՝ 500 🪙</span></div>
+  <div id="message"></div>
+</div>
+<div class="card">
+  <h2>🚘 Իմ համարները</h2>
+  <div id="collection"><div class="sub">Դեռ համար չունես։ Փորձիր պտտել։</div></div>
+</div>
+<div class="card">
+  <h2>🏪 Խաղի խանութ</h2>
+  <div class="sub">Խանութը գնում է քո վիրտուալ համարները։</div>
+  <div class="item"><span>Սովորական համար</span><b>+250 🪙</b></div>
+  <div class="item"><span>Հազվագյուտ համար</span><b>+700 🪙</b></div>
+  <div class="item"><span>Լեգենդար համար</span><b>+1500 🪙</b></div>
+</div>
+<p class="note">Սա փորձնական խաղային նախատիպ է։ Միավորները վիրտուալ են, չունեն իրական դրամական արժեք և չեն փոխանակվում իրական համարանիշների կամ գումարի հետ։ Տվյալները պահվում են միայն այս սարքի բրաուզերում։</p>
+</div>
+<script>
+const tg=window.Telegram?.WebApp; if(tg){tg.ready();tg.expand();}
+let coins=Number(localStorage.getItem('an_coins')||10000);
+let items=JSON.parse(localStorage.getItem('an_items')||'[]');
+const $=id=>document.getElementById(id);
+function save(){localStorage.setItem('an_coins',coins);localStorage.setItem('an_items',JSON.stringify(items));render();}
+function render(){
+ $('coins').textContent=coins.toLocaleString('en-US');
+ $('collection').innerHTML=items.length?items.map((x,i)=>`<div class="item"><span>${x.number} <small style="color:#aab4c4">· ${x.rarity}</small></span><button onclick="sell(${i})">Վաճառել +${x.price} 🪙</button></div>`).join(''):'<div class="sub">Դեռ համար չունես։ Փորձիր պտտել։</div>';
+}
+function makeNumber(){const letters='ABCDEFGHJKLMNPRSTUVWXYZ';const a=letters[Math.floor(Math.random()*letters.length)]+letters[Math.floor(Math.random()*letters.length)];const b=String(Math.floor(Math.random()*1000)).padStart(3,'0');return ' '+String(Math.floor(Math.random()*100)).padStart(2,'0')+' '+a+' '+b;}
+$('spin').onclick=()=>{
+ if(coins<500){$('message').textContent='Բավարար մետաղադրամ չունես։';return;}
+ coins-=500;
+ const r=Math.random();let rarity,price;
+ if(r<.72){rarity='Սովորական';price=250;}
+ else if(r<.95){rarity='Հազվագյուտ';price=700;}
+ else{rarity='Լեգենդար';price=1500;}
+ const number=makeNumber();items.unshift({number,rarity,price});
+ $('plate').textContent=number;$('message').textContent='Շնորհավորում ենք։ Նոր համար ունես։';save();
+};
+window.sell=i=>{const x=items[i];if(!x)return;coins+=x.price;items.splice(i,1);$('message').textContent='Վաճառվեց խաղի խանութին։';save();};
+render();
+</script>
+</body>
+</html>
