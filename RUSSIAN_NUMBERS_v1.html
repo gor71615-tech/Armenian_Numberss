@@ -1,0 +1,151 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>RUSSIAN NUMBERS</title>
+<script src="https://telegram.org/js/telegram-web-app.js"></script>
+<style>
+:root{--red:#d83b45;--blue:#2876c7;--orange:#f39a35;--bg:#10131b;--panel:#1b2230;--panel2:#242d3d;--text:#f7f7fb;--muted:#b7c0cf;--green:#52d6a0;--gold:#ffd17b}
+*{box-sizing:border-box}
+body{margin:0;padding:14px;min-height:100vh;color:var(--text);font-family:Arial,sans-serif;background:radial-gradient(ellipse at 8% 0%,#d83b4538,transparent 34%),radial-gradient(ellipse at 95% 8%,#2876c738,transparent 32%),radial-gradient(ellipse at 50% 100%,#f39a3522,transparent 40%),var(--bg)}
+.wrap{max-width:540px;margin:auto}
+header{text-align:center;padding:17px 14px 20px;margin-bottom:14px;border:1px solid #ffffff18;border-radius:22px;background:linear-gradient(135deg,#d83b452b,#2876c724 55%,#f39a3528);position:relative;overflow:hidden}
+header:after{content:"";position:absolute;left:0;right:0;bottom:0;height:5px;background:linear-gradient(90deg,var(--red) 0 33.33%,var(--blue) 33.33% 66.66%,var(--orange) 66.66%)}
+.flagmark{font-size:36px}h1{font-size:24px;margin:7px 0 4px;letter-spacing:1.2px}.sub{color:var(--muted);font-size:13px;line-height:1.45}
+.balance{text-align:center;margin-bottom:13px;padding:15px;border:1px solid #ffffff20;border-radius:18px;background:linear-gradient(110deg,#d83b4530,#2876c72b 55%,#f39a352b)}
+.balance small{color:#e2e8f1;font-weight:bold;letter-spacing:1px}.money{font-size:29px;color:var(--gold);font-weight:900;margin-top:5px}
+.tabs{display:grid;grid-template-columns:repeat(3,1fr);gap:7px;margin:12px 0 14px}
+.tab{background:#242d3d;color:#dce4ef;border:1px solid #ffffff12;border-radius:12px;padding:11px 5px;font-size:12px;font-weight:800}
+.tab.active{background:linear-gradient(100deg,var(--red),#a93b63 48%,var(--blue));color:white;border-color:#ffffff35}
+.panel{display:none}.panel.active{display:block}
+.card{background:linear-gradient(145deg,#242d3df5,#191f2cf5);border:1px solid #ffffff14;border-radius:18px;padding:16px;margin:12px 0;box-shadow:0 9px 25px #0003}
+h2{font-size:17px;margin:0 0 11px}h3{font-size:14px;margin:0 0 6px}
+.plate{background:#f7f7f3;color:#17191f;border-radius:12px;border:3px solid #d9dce1;display:flex;align-items:center;justify-content:center;gap:9px;padding:10px 8px;margin:16px auto 18px;max-width:290px;box-shadow:0 7px 0 #9da5b0,0 12px 22px #0005;font-size:25px;font-weight:900;letter-spacing:2px}
+.flag{background:linear-gradient(180deg,var(--red) 0 33.33%,var(--blue) 33.33% 66.66%,var(--orange) 66.66%);color:white;font-size:10px;padding:7px 6px;border-radius:4px;letter-spacing:0;text-align:center}
+button{border:0;border-radius:12px;padding:12px 13px;font-weight:800;font-size:13px;cursor:pointer}
+.primary{width:100%;color:white;background:linear-gradient(100deg,var(--red),#b82f48 48%,var(--blue))}
+.secondary{background:#303b4e;color:white;width:100%}
+.spinlist{display:grid;grid-template-columns:1fr 1fr;gap:9px}
+.spinbtn{min-height:86px;text-align:left;color:#fff;border:1px solid #ffffff1a;background:#30394b}
+.spinbtn b{display:block;font-size:15px;margin-bottom:5px}.spinbtn small{color:#c5cede}
+.spinbtn.simple{border-top:3px solid #aeb8c7}.spinbtn.mythic{border-top:3px solid #55a5ff}.spinbtn.legend{border-top:3px solid #bd7cff}.spinbtn.special{border-top:3px solid #ffbf57}
+.stats{display:flex;justify-content:space-between;gap:8px;color:var(--muted);font-size:12px;margin-top:10px}
+.item{background:#131a26;border:1px solid #ffffff12;border-radius:12px;padding:11px;margin-top:8px;display:flex;justify-content:space-between;align-items:center;gap:8px}
+.item button{padding:8px 9px;font-size:11px;background:linear-gradient(100deg,var(--orange),#f6bd58);color:#24180c;white-space:nowrap}
+.tag{display:inline-block;border-radius:20px;padding:4px 8px;font-size:10px;font-weight:800;background:#ffffff15;color:#dce5f2}
+.value{font-weight:900;color:var(--gold);font-size:13px}
+.case{border:1px solid #ffffff18;background:#141c29;border-radius:14px;padding:13px;margin-top:9px}
+.case button{margin-top:9px;width:100%;background:linear-gradient(100deg,var(--orange),#f6bd58);color:#261b0b}
+.note{font-size:11px;color:var(--muted);line-height:1.5;text-align:center;margin:16px 4px}
+#message{min-height:22px;text-align:center;color:var(--green);font-size:13px;margin:8px}
+.empty{color:var(--muted);font-size:13px;padding:9px 2px}
+@media(max-width:360px){body{padding:9px}.spinbtn{padding:9px}.plate{font-size:21px}.tabs{gap:5px}.tab{font-size:11px}}
+</style>
+</head>
+<body>
+<div class="wrap">
+<header><div class="flagmark">🇷🇺</div><h1>RUSSIAN NUMBERS</h1><div class="sub">Игра с российскими виртуальными автомобильными номерами</div></header>
+<div class="balance"><small>ТВОИ МОНЕТЫ</small><div class="money"><span id="coins">200 000</span> 🪙</div></div>
+<nav class="tabs">
+<button class="tab active" data-tab="home">🏠 Главная</button>
+<button class="tab" data-tab="spinpage">🎰 Крутить</button>
+<button class="tab" data-tab="collectionpage">🚘 Коллекция</button>
+<button class="tab" data-tab="shoppage">🏪 Магазин</button>
+<button class="tab" data-tab="starspage">⭐ Stars</button>
+<button class="tab" data-tab="ratingpage">🏆 Рейтинг</button>
+</nav>
+<section class="panel active" id="home">
+<div class="card" style="text-align:center"><h2>Добро пожаловать 🇷🇺</h2><div class="sub">Собирай редкие российские виртуальные номера, увеличивай ценность коллекции и поднимайся в рейтинге.</div><div class="plate"><span class="flag">RUS<br>🇷🇺</span><span id="featured">А 777 АА 77</span></div><button class="primary" onclick="showTab('spinpage')">НАЧАТЬ ИГРУ</button></div>
+<div class="card"><h2>🎯 Стоимость прокруток</h2><div class="spinlist">
+<button class="spinbtn simple" onclick="spin('simple')"><b>Обычная</b><small>10 000 🪙</small></button>
+<button class="spinbtn mythic" onclick="spin('mythic')"><b>МИФИЧЕСКАЯ</b><small>50 000 🪙</small></button>
+<button class="spinbtn legend" onclick="spin('legendary')"><b>ЛЕГЕНДАРНАЯ</b><small>200 000 🪙</small></button>
+<button class="spinbtn special" onclick="spin('special')"><b>ОСОБАЯ</b><small>800 000 🪙</small></button>
+</div></div>
+<div id="message"></div>
+</section>
+<section class="panel" id="spinpage">
+<div class="card" style="text-align:center"><h2>🎰 Выбери прокрутку</h2><div class="plate"><span class="flag">RUS<br>🇷🇺</span><span id="plate">А 777 АА 77</span></div>
+<div class="spinlist">
+<button class="spinbtn simple" onclick="spin('simple')"><b>Обычная</b><small>10 000 🪙</small></button>
+<button class="spinbtn mythic" onclick="spin('mythic')"><b>МИФИЧЕСКАЯ</b><small>50 000 🪙</small></button>
+<button class="spinbtn legend" onclick="spin('legendary')"><b>ЛЕГЕНДАРНАЯ</b><small>200 000 🪙</small></button>
+<button class="spinbtn special" onclick="spin('special')"><b>ОСОБАЯ</b><small>800 000 🪙</small></button>
+</div><div class="stats"><span>Стартовый баланс: 200 000 🪙</span><span>Виртуальная игра</span></div></div>
+<div id="message2"></div>
+</section>
+<section class="panel" id="collectionpage"><div class="card"><h2>🚘 Мои номера</h2><div id="collection" class="empty">Твоя коллекция пока пуста.</div></div></section>
+<section class="panel" id="shoppage"><div class="card"><h2>🏪 Игровой магазин</h2><div class="sub">Продавай виртуальные номера игровому магазину и получай монеты.</div><div id="shopitems"></div></div></section>
+<section class="panel" id="starspage"><div class="card"><h2>⭐ Кейсы за Telegram Stars</h2><div class="sub">Предложения за Stars должны иметь заранее известное содержимое. В этой демоверсии оплата не проводится. Для настоящей оплаты нужен сервер Telegram-бота.</div>
+<div class="case"><h3>🇷🇺 Starter Case</h3><div class="sub">Гарантированный набор: 1 обычный виртуальный номер + 25 000 🪙</div><span class="tag">Цена: 25 ⭐</span><button onclick="starInfo()">Подключить оплату бота</button></div>
+<div class="case"><h3>💎 Премиум-кейс</h3><div class="sub">Гарантированный набор: 1 редкий виртуальный номер + 100 000 🪙</div><span class="tag">Цена: 75 ⭐</span><button onclick="starInfo()">Подключить оплату бота</button></div>
+<div class="case"><h3>👑 Элитный кейс</h3><div class="sub">Гарантированный набор: 1 легендарный виртуальный номер + 250 000 🪙</div><span class="tag">Цена: 150 ⭐</span><button onclick="starInfo()">Подключить оплату бота</button></div>
+</div></section>
+<section class="panel" id="ratingpage"><div class="card"><h2>🏆 Моя статистика</h2><div id="stats" class="sub"></div><div class="note">Для общего рейтинга всех игроков нужны сервер и база данных. Эта версия показывает только данные этого устройства.</div></div></section>
+<p class="note">Все номера, монеты и оценки существуют только в игре. Они не являются настоящими госномерами, не имеют денежной стоимости и не продаются за реальные деньги. Данные хранятся в браузере этого устройства.</p>
+</div>
+<script>
+const tg=window.Telegram?.WebApp;if(tg){tg.ready();tg.expand();}
+const $=id=>document.getElementById(id);
+const costs={simple:10000,mythic:50000,legendary:200000,special:800000};
+const labels={simple:'Обычная',mythic:'МИФИЧЕСКАЯ',legendary:'ЛЕГЕНДАРНАЯ',special:'ОСОБАЯ'};
+let coins=Number(localStorage.getItem('ru_coins_v1')||200000);
+let items=JSON.parse(localStorage.getItem('ru_items_v1')||'[]');
+let spins=Number(localStorage.getItem('ru_spins_v1')||0);
+function fmt(n){return Math.round(n).toLocaleString('en-US');}
+function showTab(id){document.querySelectorAll('.panel').forEach(p=>p.classList.toggle('active',p.id===id));document.querySelectorAll('.tab').forEach(b=>b.classList.toggle('active',b.dataset.tab===id));}
+document.querySelectorAll('.tab').forEach(b=>b.addEventListener('click',()=>showTab(b.dataset.tab)));
+function save(){localStorage.setItem('ru_coins_v1',coins);localStorage.setItem('ru_items_v1',JSON.stringify(items));localStorage.setItem('ru_spins_v1',spins);render();}
+function makeNumber(){
+ const letters='АВЕКМНОРСТУХ';
+ const first=letters[Math.floor(Math.random()*letters.length)];
+ const a=letters[Math.floor(Math.random()*letters.length)];
+ const b=letters[Math.floor(Math.random()*letters.length)];
+ const tier=Math.random();
+ let digits;
+ if(tier<.04) digits='888';
+ else if(tier<.10) digits='777';
+ else if(tier<.17) digits='000';
+ else if(tier<.30){const d=String(Math.floor(Math.random()*10));digits=d.repeat(3);}
+ else if(tier<.52){const d=String(Math.floor(Math.random()*10));digits=d+d+String(Math.floor(Math.random()*10));}
+ else digits=String(Math.floor(Math.random()*1000)).padStart(3,'0');
+ const regions=['77','97','99','177','197','199','777','799','78','98','178','198','50','90','150','190','750','790','23','93','123','25','125','38','138','54','154','66','96','196','02','102','16','116','716'];
+ const region=regions[Math.floor(Math.random()*regions.length)];
+ return {number:`${first} ${digits} ${a}${b} ${region}`,digits,letters:a+b+first,region};
+}
+function estimatePlate(n){
+ const d=n.digits, same=d[0]===d[1]&&d[1]===d[2], pair=(d[0]===d[1]||d[1]===d[2]||d[0]===d[2]), zeros=d.includes('0');
+ const sameLetters=n.letters[0]===n.letters[1];
+ if(same&&(d==='888'||d==='777'||d==='999')) return {value:8000000,rarity:'Особая'};
+ if(same&&sameLetters) return {value:5000000,rarity:'Легендарная'};
+ if(same) return {value:3000000,rarity:'Легендарная'};
+ if(pair&&sameLetters) return {value:1200000,rarity:'Редкая'};
+ if(pair||zeros) return {value:500000,rarity:'Редкая'};
+ return {value:100000,rarity:'Обычная'};
+}
+function spin(type){
+ const cost=costs[type];if(coins<cost){msg('Недостаточно монет для этой прокрутки.');return;}
+ coins-=cost;spins++;
+ let n=makeNumber(),v=estimatePlate(n);
+ const chance={simple:.06,mythic:.20,legendary:.48,special:.78}[type];
+ if(Math.random()>chance && v.rarity!=='Обычная'){n=makeNumber();v=estimatePlate(n);}
+ const item={number:n.number,rarity:v.rarity,value:v.value,price:Math.max(100,Math.round(v.value/1000)),date:Date.now()};
+ items.unshift(item);$('plate').textContent=n.number;$('featured').textContent=n.number;
+ msg(`Поздравляем! ${n.number} · ${v.rarity} · игровая оценка: ${fmt(v.value)} монет`);
+ save();showTab('collectionpage');
+}
+function msg(t){$('message').textContent=t;$('message2').textContent=t;}
+function sell(i){const x=items[i];if(!x)return;const payout=Math.max(100,Math.round(x.value/1000));coins+=payout;items.splice(i,1);msg(`Магазин купил номер: +${fmt(payout)} 🪙`);save();}
+window.sell=sell;window.spin=spin;window.showTab=showTab;
+function starInfo(){alert('В этой демоверсии оплата не проводится. Для настоящих платежей Telegram Stars нужен сервер бота.');}
+function render(){
+ $('coins').textContent=fmt(coins);
+ $('collection').innerHTML=items.length?items.map((x,i)=>`<div class="item"><div><b>${x.number}</b><br><small class="sub">${x.rarity} · оценка ${fmt(x.value)} монет</small></div><button onclick="sell(${i})">Продать +${fmt(Math.max(100,Math.round(x.value/1000)))} 🪙</button></div>`).join(''):'Твоя коллекция пока пуста.';
+ $('shopitems').innerHTML=items.length?items.map(x=>`<div class="item"><span>${x.number}<br><small class="sub">${x.rarity}</small></span><b class="value">${fmt(x.value)} монет</b></div>`).join(''):'<div class="empty">В магазине пока нет твоих номеров. Получи номера в прокрутках.</div>';
+ $('stats').innerHTML=`Прокруток: <b>${spins}</b><br>В коллекции: <b>${items.length}</b><br>Игровая оценка коллекции: <b>${fmt(items.reduce((s,x)=>s+x.value,0))} монет</b>`;
+}
+render();
+</script>
+</body>
+</html>
